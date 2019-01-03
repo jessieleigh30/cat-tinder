@@ -4,7 +4,7 @@ import axios from "axios";
 
 //think of this file as our reducer in redux, this is for auth, it stores the users data
 //creating a context, create provider, create consumer
-
+//this provider provides user object for app and also handles the token
 //creating a context for us and storing it in the variable AuthContext
 const AuthContext = React.createContext();
 export const AuthConsumer = AuthContext.Consumer;
@@ -47,9 +47,10 @@ export class AuthProvider extends React.Component {
     axios.delete("/api/auth/sign_out")
     .then( res => {
       this.setState({ user: null, });
-      history.push("/");
+      history.push("/logout");
     })
   }
+  
 
 
   render() {
@@ -61,12 +62,13 @@ export class AuthProvider extends React.Component {
       //passing the user into the value
       //this eliminates prop drilling
       <AuthContext.Provider value={{
-        //this is an object
+        //this is the user object
         ...this.state,
         //is the user authenticated? return true if yes, false if not
         authenticated: this.state.user !== null,
         handleRegister: this.handleRegister,
         //any child of this component will have access to these functions
+        //these are the functions we created above
         handleLogin: this.handleLogin,
         handleLogout: this.handleLogout,
         setUser: (user) => this.setState({ user, })

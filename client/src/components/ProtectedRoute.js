@@ -1,34 +1,28 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
-import { AuthConsumer } from "../providers/AuthProvider";
+import { Route, Redirect, } from "react-router-dom";
+import { AuthConsumer, } from "../providers/AuthProvider";
 
-//...rest just grabs the rest of the component
-//this is checking to see if we are authenticated, then render component 
-const ProtectedRoute = ({auth, component: Component, ...rest }) => {
-  <Route
-    {...rest}
-    render={ props => (
-      auth.authenticated ?
-      <Component {...props} />
-      :
-      //if not authenticate push to login page
-      <Redirect 
-        to={{
-          pathname: "/login",
-          state: { from: props.location, }
-
-      }}
-      />
-    )}
-  />
-}
-
-const ConnectedProtectedRoute = ( props ) => (
+//will only allow a user to use this route if they are authenticated
+//...rest is spreading the rest of the key value pairs through props
+const ProtectedRoute = ({ auth, component: Component, ...rest }) => (
   <AuthConsumer>
-    { auth =>
-    <ProtectedRoute {...props} auth={auth} />
+    { auth => 
+      <Route 
+        { ...rest }
+        render={ props => (
+          auth.authenticated ? 
+            <Component {...props} />
+          :
+            <Redirect 
+              to={{
+                pathname: "/login",
+                state: { from: props.location, },
+              }}
+            />
+        )}
+      />
     }
   </AuthConsumer>
 )
 
-export default ConnectedProtectedRoute;
+export default ProtectedRoute;

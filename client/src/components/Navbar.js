@@ -1,6 +1,6 @@
 import React from "react";
-import { AuthConsumer, } from "../providers/AuthProvider";
 import { Menu } from "semantic-ui-react";
+import { AuthConsumer, } from "../providers/AuthProvider";
 import { Link, withRouter } from "react-router-dom";
 
 class Navbar extends React.Component {
@@ -8,12 +8,11 @@ class Navbar extends React.Component {
   rightNavItems = () => { 
     const { auth: {user, handleLogout,}, location } = this.props;
 
-    if (user) {
+    if (user) { 
       return (
         <Menu.Menu position="right">
           <Menu.Item 
           name="Logout"
-          //Todo: set this up
           onclick={() => handleLogout(this.props.history)}
           />
         </Menu.Menu>
@@ -27,14 +26,14 @@ class Navbar extends React.Component {
             <Menu.Item 
               name="Login"
               id="login"
-              active={this.props.location.pathname === "/login"}
+              active={location.pathname === "/login"}
             />
             </Link>
             <Link to="/register">
             <Menu.Item 
               name="Register"
               id="register"
-              active={this.props.location.pathname === "/register"}
+              active={location.pathname === "/register"}
             />
           </Link>
           </Menu.Menu>

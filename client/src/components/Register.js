@@ -10,7 +10,8 @@ class Register extends React.Component {
     const { email, password, passwordConfirmation } = this.state;
     const { auth: { handleRegister, }, history, } = this.props;
 
-    //password confirmation
+    //password confirmation fucntionality
+    
     if (password === passwordConfirmation)
       handleRegister({ email, password, passwordConfirmation, }, history);
     else
@@ -65,6 +66,8 @@ class Register extends React.Component {
   }
 }
 
+//having AuthConsumer here gives us access to handleRegister etc
+//this is a higher order component 
 export default class ConnectedRegister extends React.Component {
   render() {
     return (
